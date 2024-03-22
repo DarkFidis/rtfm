@@ -129,6 +129,19 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Dependencies
+/node_modules
+
+# Production
+/build
+
+# Generated files
+.docusaurus
+.cache-loader
+
+# Misc
+.DS_Store
+
 # IDE files
 .idea/
 .vscode/
