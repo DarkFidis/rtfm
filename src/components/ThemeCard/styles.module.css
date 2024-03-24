@@ -1,0 +1,31 @@
+.card {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    padding: 12px;
+    margin: 15px;
+}
+
+.cardbody {
+    position: absolute;
+    height: 75px;
+    width: 100%;
+    background-color: rgba(63, 98, 18, 0.8);
+    top: 150px;
+    left: 0;
+    text-align: center;
+    padding: 20px 0;
+    transition: 1s;
+}
+
+.cardbody p {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.card:hover .cardbody {
+    top: 75px;
+}
