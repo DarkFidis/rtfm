@@ -115,6 +115,12 @@ docker ps
 docker exec -it <NOM_CONTAINER> sh
 ```
 
+### Accès aux logs
+
+```shell
+docker container logs <CONTAINER_NAME>
+```
+
 ### Copie de fichiers
 
 Copie de fichiers depuis la machine hôte vers le conteneur : 
