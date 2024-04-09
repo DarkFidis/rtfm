@@ -6,7 +6,7 @@
 
 L'instruction `FROM` permet de spécifier l'image de base sur lequel on va travailler : 
 
-```shell
+```dockerfile
 FROM <NOM_IMAGE>:<IMAGE_VERSION>
 ```
 
@@ -15,13 +15,13 @@ FROM <NOM_IMAGE>:<IMAGE_VERSION>
 L'instruction `RUN` permet d'éxecuter une commande dans un nouveau layer puis de sauvegarder le résultat. L'image qui en résulte sera utilisée
 pour les instructions suivantes
 
-```shell
+```dockerfile
 RUN ["executable", "param1", "param2"]
 ```
 
 On peut utiliser `RUN` dans sa forme shell, ce qui permet d'éxecuter la commande spécifiée par le shell (`sh`)
 
-```shell
+```dockerfile
 RUN echo "Hello !"
 ```
 
@@ -31,7 +31,7 @@ RUN echo "Hello !"
 
 L'instruction `WORKDIR` permet de spécifier le repertoire de travail dans l'image pour les commandes `RUN`, `CMD`, `ENTRYPOINT`, `COPY` et `ADD` : 
 
-```shell
+```dockerfile
 WORKDIR /src/app
 ```
 
@@ -39,7 +39,7 @@ WORKDIR /src/app
 
 L'instruction `COPY` permet de copier des fichiers depuis le système dans celui de l'image : 
 
-```shell
+```dockerfile
 COPY <SOURCE> <DESTINATION>
 ```
 
@@ -49,7 +49,7 @@ COPY <SOURCE> <DESTINATION>
 
 L'instruction `CMD` permet de spécifier la commande par défaut qui sera lancée par le ou les conteneurs lancés avec l'image
 
-```shell
+```dockerfile
 CMD ["exécutable","param1","param2"]
 ```
 
@@ -63,7 +63,7 @@ est `/bin/sh -c`
 > C'est le point d'entrée qu conteneur qui lancera la commande spécifiée dans l'instruction `CMD`, donc `CMD` servira, dans ce cas, à spécifier les
 > arguments du point d'entrée
 
-```shell
+```dockerfile
 ENTRYPOINT ["executable"]
 ```
 
@@ -73,13 +73,13 @@ ENTRYPOINT ["executable"]
 
 L'instruction `ARG` permet de spécifier des variables pour le build de l'image : 
 
-```shell
+```dockerfile
 ARG <ARG_NAME>
 ```
 
 Il est possible de spécifier une valeur par défaut : 
 
-```shell
+```dockerfile
 ARG <ARG_NAME>=<DEFAULT_VALUE>
 ```
 
@@ -87,7 +87,7 @@ ARG <ARG_NAME>=<DEFAULT_VALUE>
 
 L'instruction `ENV` permet de spécifier des variables d'environnement : 
 
-```shell
+```dockerfile
 ENV <KEY>=<VALUE>
 ```
 
@@ -95,6 +95,6 @@ ENV <KEY>=<VALUE>
 
 L'instruction `LABEL` permet d'ajouter des métadonnées à l'image : 
 
-```shell
+```dockerfile
 LABEL version="3.6.12"
 ```
