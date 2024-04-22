@@ -1,0 +1,8 @@
+{
+  "label": "PostgreSQL",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "Read the Fucking Manuel about PostgreSQL"
+  }
+}
