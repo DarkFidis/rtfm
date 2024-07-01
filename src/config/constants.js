@@ -10,6 +10,11 @@ export const themes = [
         title: 'Kubernetes'
     },
     {
+      href: 'ansible',
+      imgUrl: 'ansible.svg',
+      title: 'Ansible',
+    },
+    {
         href: 'linux',
         imgUrl: 'linux.svg',
         title: 'Linux'
