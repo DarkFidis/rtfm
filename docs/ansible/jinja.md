@@ -245,12 +245,12 @@ managée.
 
 #### Tests de comparaison
 
-- `eq` : =
-- `ne` : !=
-- `lt` : <
-- `le` : <=
-- `gt` : >
-- `ge` : >=
+- `eq` : égal
+- `ne` : non-égal
+- `lt` : inférieur
+- `le` : inférieur ou égal
+- `gt` : supérieur
+- `ge` : supérieur ou égal
 
 #### Tests d'état
 
