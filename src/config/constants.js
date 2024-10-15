@@ -1,57 +1,77 @@
-export const themes = [
+export const categories = [
     {
-        href: 'docker',
-        imgUrl: 'docker.svg',
-        title: 'Docker'
+        title: 'DevOps',
+        items: [
+            {
+                href: 'docker',
+                imgUrl: 'docker.svg',
+                title: 'Docker'
+            },
+            {
+                href: 'kubernetes',
+                imgUrl: 'kubernetes.svg',
+                title: 'Kubernetes'
+            },
+            {
+                href: 'gitlab',
+                imgUrl: 'gitlab.svg',
+                title: 'GitLab'
+            },
+            {
+                href: 'ansible',
+                imgUrl: 'ansible.svg',
+                title: 'Ansible',
+            },
+            {
+                href: 'linux',
+                imgUrl: 'linux.svg',
+                title: 'Linux'
+            },
+        ]
     },
     {
-        href: 'kubernetes',
-        imgUrl: 'kubernetes.svg',
-        title: 'Kubernetes'
+        title: 'Front',
+        items: [
+            {
+                href: 'next',
+                imgUrl: 'next.svg',
+                title: 'Next'
+            },
+            {
+                href: 'react',
+                imgUrl: 'react.svg',
+                title: 'React'
+            },
+            {
+                href: 'vue',
+                imgUrl: 'vue.svg',
+                title: 'Vue'
+            },
+            {
+                href: 'svelte',
+                imgUrl: 'svelte.svg',
+                title: 'Svelte'
+            },
+        ]
     },
     {
-      href: 'ansible',
-      imgUrl: 'ansible.svg',
-      title: 'Ansible',
-    },
-    {
-        href: 'linux',
-        imgUrl: 'linux.svg',
-        title: 'Linux'
-    },
-    {
-        href: 'next',
-        imgUrl: 'next.svg',
-        title: 'Next'
-    },
-    {
-        href: 'react',
-        imgUrl: 'react.svg',
-        title: 'React'
-    },
-    {
-        href: 'vue',
-        imgUrl: 'vue.svg',
-        title: 'Vue'
-    },
-    {
-        href: 'svelte',
-        imgUrl: 'svelte.svg',
-        title: 'Svelte'
-    },
-    {
-        href: 'mongo',
-        imgUrl: 'mongo.svg',
-        title: 'Mongo'
-    },
-    {
-        href: 'postgres',
-        imgUrl: 'postgres.svg',
-        title: 'PostgreSQL'
-    },
-    {
-        href: 'redis',
-        imgUrl: 'redis.svg',
-        title: 'Redis'
+        title: 'Databases',
+        items: [
+            {
+                href: 'mongo',
+                imgUrl: 'mongo.svg',
+                title: 'Mongo'
+            },
+            {
+                href: 'postgres',
+                imgUrl: 'postgres.svg',
+                title: 'PostgreSQL'
+            },
+            {
+                href: 'redis',
+                imgUrl: 'redis.svg',
+                title: 'Redis'
+            }
+        ]
     }
 ]
