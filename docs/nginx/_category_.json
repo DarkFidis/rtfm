@@ -1,0 +1,8 @@
+{
+  "label": "NGINX",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Read the Fucking Manuel about NGINX"
+  }
+}

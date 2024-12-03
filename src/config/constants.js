@@ -13,6 +13,11 @@ export const categories = [
                 title: 'Kubernetes'
             },
             {
+                href: 'nginx',
+                imgUrl: 'nginx.svg',
+                title: 'NGINX'
+            },
+            {
                 href: 'gitlab',
                 imgUrl: 'gitlab.svg',
                 title: 'GitLab'
