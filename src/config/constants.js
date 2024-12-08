@@ -35,6 +35,16 @@ export const categories = [
         ]
     },
     {
+        title: 'Backend',
+        items: [
+            {
+                href: 'graphql',
+                imgUrl: 'graphql.svg',
+                title: 'GraphQL'
+            },
+        ]
+    },
+    {
         title: 'Front',
         items: [
             {
@@ -76,6 +86,31 @@ export const categories = [
                 href: 'redis',
                 imgUrl: 'redis.svg',
                 title: 'Redis'
+            }
+        ]
+    },
+    {
+        title: 'Languages',
+        items: [
+            {
+                href: 'javascript',
+                imgUrl: 'javascript.svg',
+                title: 'JavaScript'
+            },
+            {
+                href: 'typescript',
+                imgUrl: 'typescript.svg',
+                title: 'TypeScript'
+            },
+            {
+                href: 'rust',
+                imgUrl: 'rust.svg',
+                title: 'Rust'
+            },
+            {
+                href: 'ruby',
+                imgUrl: 'ruby.svg',
+                title: 'Ruby'
             }
         ]
     }

@@ -2,6 +2,6 @@
     background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2)), url(/img/bg-sete.png);
     background-size: cover;
     background-position: center;
-    padding: 150px 0;
+    padding: 50px 0;
     height: calc(100vh - 60px);
 }

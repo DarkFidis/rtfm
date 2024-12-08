@@ -1,5 +1,6 @@
 .category {
     padding: 10px;
+    margin: 20px;
     background-color: rgba(0,0,0,0.6);
     width: 400px;
 }
