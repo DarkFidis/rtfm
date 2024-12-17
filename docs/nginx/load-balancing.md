@@ -215,8 +215,8 @@ events {
 http {
     ssl_protocols TLSv1.3;
     ssl_prefer_server_ciphers off;
-    ssl_certificate /etc/letsencrypt/live/www.nginx-dyma.fr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/www.nginx-dyma.fr/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/<MY_DOMAIN>/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/<MY_DOMAIN>/privkey.pem;
 
     default_type text/html;
 
