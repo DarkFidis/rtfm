@@ -113,5 +113,15 @@ export const categories = [
                 title: 'Ruby'
             }
         ]
+    },
+    {
+        title: 'Mobile',
+        items: [
+            {
+                href: 'react-native',
+                imgUrl: 'expo.svg',
+                title: 'React-Native'
+            }
+        ]
     }
 ]
