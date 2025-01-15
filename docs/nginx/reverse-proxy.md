@@ -40,7 +40,7 @@ http {
 
 Dans cet exemple, toutes les requêtes avec pour argument `/api` seront transmises au service disponible sur `http://localhost:3000`
 
-> Attention à ne pas mettre de `/` à la fin de `<SERVICE_URI> car l'URI finale est concaténée par NGINX sans plus de verifications.
+> Attention à ne pas mettre de `/` à la fin de `<SERVICE_URI>` car l'URI finale est concaténée par NGINX sans plus de verifications.
 
 ## Transmission des headers
 
