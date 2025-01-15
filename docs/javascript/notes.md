@@ -63,7 +63,18 @@ console.log({ foo, bar, baz })
 console.table([foo, bar, baz])
 ```
 
- ### Styliser la console
+### Log d'un objet complet
+
+Pour logger un objet en profondeur : 
+
+```javascript
+console.dir(object, {
+    depth: Infinity,
+    colors: true,
+})
+```
+
+### Styliser la console
 
 ```javascript
 console.log('%c texte', 'style_css')
@@ -130,6 +141,29 @@ const stringFilter = string => string.normalize('NFD').replace(/[\u0300-\u036f]/
 const bigNb = 1000000
 // peut d'écrire
 const bigNb = 1e6
+```
+
+## Dates
+
+### Récupérer la timeZone du user
+
+```javascript
+const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+```
+
+
+### Récupérer la langue
+
+```javascript
+const userLang = navigator.language || navigator.userLanguage;
+```
+
+### Formattage
+
+Enfin, le formattage avec les infos précédemment obtenues : 
+
+```javascript
+const formattedDate = date.toLocaleString(userLang, { timeZone: userTimeZone })
 ```
 
 ## Classes
