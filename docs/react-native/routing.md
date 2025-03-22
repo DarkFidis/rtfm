@@ -428,7 +428,27 @@ function CustomDrawerContent(props) {
 
 ### Nesting de navigateurs
 
-// TODO 
+Il est possible et même très simple de nester des navigateurs. En temps normal, on associe un screen à un composant comme ici : 
+
+```jsx
+const Tab = createBottomTabNavigator();
+
+export default function BottomTabsNavigator() {
+
+    return (
+        <Tab.Navigator>
+            <Tab.Screen
+                component={SomeScreenComponent}
+                name="Home"
+            />
+        </Tab.Navigator>
+    )
+}
+```
+
+Il suffit simplement de remplacer le composant (ici `SomeScreenComponent`) par un navigateur.
+
+> L'ordre d'imbrication des navigateurs n'a pas d'importance, cela varie en fonction du design souhaité.
 
 ## Expo-Router
 
@@ -454,13 +474,11 @@ Dans `package.json`, il faut modifier la propriété `main` :
 }
 ```
 
-Dans le fichier de conf de l'app (`app.json`), ajouter la propriété `scheme` : 
-
-> TODO : A préciser : valeurs possibles
+Dans le fichier de conf de l'app (`app.json`), ajouter la propriété `scheme` :
 
 ```js
 {
-  "scheme": "router-expo-scheme-de-votre-choix",
+  "scheme": "<APP_NAME>",
 }
 ```
 
