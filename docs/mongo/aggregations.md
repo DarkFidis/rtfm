@@ -85,10 +85,10 @@ Parmi les opérateurs d'expression les plus utilisés :
 
 - `$eq` : retourne true si les valeurs sont égales
 - `$ne` : retourne true si les valeurs ne sont pas égales
-- `$lt` : <
-- `$lte` : <=
-- `$gt` : >
-- `$gte` : >=
+- `$lt` : inférieur à
+- `$lte` : inférieur ou égal à
+- `$gt` : supérieur à
+- `$gte` : supérieur ou égal à
 - `$cmp` : retourne 0 si les valeurs sont égales, 1 si la première valeur est supérieure ou -1 si inférieure
 
 #### Dates
