@@ -107,6 +107,64 @@ Pour créer un store, c'est-à-dire un state commun partagé entre plusieurs com
 
 > TODO
 
-### Snippets
+## Snippets
+
+En Svelte, les snippets sont des bouts de code que l'on peut ré-utiliser dans nos composants.
+
+### Définition & Utilisation
+
+Pour définir un snippet : 
+
+```sveltehtml
+{#snippet mysnippet()}
+    <!-- Du code HTML -->
+{/snippet}
+```
+
+Ensuite, pour l'afficher dans un composant
+
+```sveltehtml
+{@render mysnippet()}
+```
+
+Si toutefois le snippet contient des données dynamiques, on les ajoute en tant que paramètres :
+
+```sveltehtml
+{#snippet mysnippet(prop)}
+    <!-- Du code HTML -->
+{/snippet}
+```
+
+Pour l'afficher dans un composant
+
+```sveltehtml
+{@render mysnippet('prop_value')}
+```
+
+### Utilisation comme props
+
+On peut passer un snippet en tant que propriété d'un composant
+
+````sveltehtml
+<MyComponent {mysnippet} />
+````
+
+Par la suite, dans `MyComponent` : 
+
+````sveltehtml
+<script>
+	let { mysnippet } = $props();
+</script>
+
+<div>
+    {@render mysnippet()}
+</div>
+````
+
+> Si on définit un snippet en tant que children d'un composant, ce dernier devient automatiquement une propriété dudit composant donc inutile
+> de le déclarer
+
+## Bindings
 
 > TODO
+
