@@ -103,6 +103,75 @@ console.timeEnd('process_name')
 
 > En cas d'échec d'une promesse, `Promise.all()` ne renverra que le résultat du rejet. Toutefois, toutes les autres promesses auront été exécutées.
 
+### En série
+
+Il existe plusieurs façons de lancer des promesses en série : 
+
+1. Avec reduce
+
+```javascript
+function runInSeries(tasks) {
+  return tasks.reduce((prevPromise, task) => {
+    return prevPromise.then(() => task().then(result => {
+      console.log(result);
+    }));
+  }, Promise.resolve());
+}
+
+const tasks = [
+  () => Promise.resolve("Tâche 1 terminée"),
+  () => new Promise(resolve => setTimeout(() => resolve("Tâche 2 terminée"), 1000)),
+  () => Promise.resolve("Tâche 3 terminée")
+];
+
+runInSeries(tasks);
+```
+
+2. Avec une boucle for
+
+```javascript
+async function runInSeries(tasks) {
+  for (const task of tasks) {
+    const result = await task();
+    console.log(result);
+  }
+}
+
+const tasks = [
+  () => Promise.resolve("Tâche 1 terminée"),
+  () => new Promise(resolve => setTimeout(() => resolve("Tâche 2 terminée"), 1000)),
+  () => Promise.resolve("Tâche 3 terminée")
+];
+
+runInSeries(tasks);
+```
+
+3. De manière récursive
+
+```javascript
+function runInSeries(tasks) {
+  if (tasks.length === 0) return Promise.resolve();
+
+  const [first, ...rest] = tasks;
+  return first().then(result => {
+    console.log(result);
+    return runInSeries(rest);
+  });
+}
+```
+
+### eachAsync
+
+````javascript
+const eachAsync = async (array, iterator) => {
+    await array.reduce((p, item, index, ar) => {
+        p.then(async () => {
+            await iterator(item, index, ar)
+        })
+    }, Promise.resolve())
+}
+````
+
 ## Tableaux
 
 ### Tableau de taille N
