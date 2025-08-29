@@ -166,5 +166,208 @@ Par la suite, dans `MyComponent` :
 
 ## Bindings
 
+### Texte
+
+Les élements ayant la prop `contenteditable` permettent un binding dynamique `innerHTML` ou `textContent` : 
+
+```sveltehtml
+<script>
+	let html = $state('<p>Write some text!</p>');
+</script>
+<!-- L'utilisateur peut éditer le contenu de la div -->
+<!-- Le contenu sera interprété en HTML avec innerHTML -->
+<div bind:innerHTML={html} contenteditable></div>
+<!-- Le state sera modifié en conséquence -->
+<pre>{html}</pre>
+```
+
+### Dans un bloc each
+
+```sveltehtml
+<script>
+	let todos = $state([
+		{ done: false, text: 'Finish tutorial' },
+		{ done: false, text: 'Build an app' },
+		{ done: false, text: 'World domination' }
+	]);
+
+	function add() {
+		todos.push({
+			done: false,
+			text: ''
+		});
+	}
+
+	function clear() {
+		todos = todos.filter((t) => !t.done);
+	}
+
+	let remaining = $derived(todos.filter((t) => !t.done).length);
+</script>
+
+<div class="centered">
+	<h1>todos</h1>
+
+	<ul class="todos">
+		{#each todos as todo}
+			<li class={{ done: todo.done }}>
+				<input
+					type="checkbox"
+                    <!-- Si l'utilisateur clique sur check, la tâche sera done -->
+					bind:checked={todo.done}
+				/>
+
+				<input
+					type="text"
+					placeholder="What needs to be done?"
+                    <!-- L'utilisateur peut modifier directement le contenu de la todo -->
+					bind:value={todo.text}
+				/>
+			</li>
+		{/each}
+	</ul>
+
+	<p>{remaining} remaining</p>
+
+	<button onclick={add}>
+		Add new
+	</button>
+
+	<button onclick={clear}>
+		Clear completed
+	</button>
+</div>
+```
+
+### Binding de dimensions
+
+Il est possible de binder la hauteur et la largeur d'un élément, respectivement avec `clientHeight` et `clientWidth` : 
+
+```sveltehtml
+<script>
+	let width = $state();
+	let height = $state();
+	let size = $state(42);
+</script>
+
+<label>
+	<input type="range" bind:value={size} min="10" max="100" />
+	font size ({size}px)
+</label>
+
+<div bind:clientWidth={width} bind:clientHeight={height}>
+	<span style="font-size: {size}px" contenteditable>
+		edit this text
+	</span>
+
+	<span class="size">{width} x {height}px</span>
+</div>
+```
+
+### Binding this
+
+Le binding `this` permet d'avoir une référence directe au composant dans la variable bindée. On peut voir ça comme l'équivalent d'une ref en React.
+
+```sveltehtml
+<script>
+  let inputEl;
+
+  function focusInput() {
+    inputEl.focus(); // On peut appeler les méthodes natives du DOM
+  }
+</script>
+
+<input bind:this={inputEl} placeholder="Tapez ici..." />
+<button on:click={focusInput}>Focus</button>
+```
+
+### Binding de props
+
+Si on souhaite binder une prop de composant, il faut la rendre "bindable" : 
+
+- Dans le composant enfant
+
+```sveltehtml
+<script>
+	let { value = $bindable(''), onsubmit } = $props();
+
+	const select = (num) => () => (value += num);
+	const clear = () => (value = '');
+</script>
+
+<div class="keypad">
+	<button onclick={select(1)}>1</button>
+	<button onclick={select(2)}>2</button>
+	<button onclick={select(3)}>3</button>
+	<button onclick={select(4)}>4</button>
+	<button onclick={select(5)}>5</button>
+	<button onclick={select(6)}>6</button>
+	<button onclick={select(7)}>7</button>
+	<button onclick={select(8)}>8</button>
+	<button onclick={select(9)}>9</button>
+
+	<button disabled={!value} onclick={clear}>
+		clear
+	</button>
+
+	<button onclick={select(0)}>0</button>
+
+	<button disabled={!value} onclick={onsubmit}>
+		submit
+	</button>
+</div>
+```
+
+Ensuite, on peut binder la prop dans le composant parent
+
+```sveltehtml
+<script>
+	import ChildrenComponent from './ChildrenComponent.svelte';
+
+	let pin = $state('');
+
+	let view = $derived(pin
+		? pin.replace(/\d(?!$)/g, '•')
+		: 'enter your pin');
+
+	function onsubmit() {
+		alert(`submitted ${pin}`);
+	}
+</script>
+
+<h1 style="opacity: {pin ? 1 : 0.4}">
+	{view}
+</h1>
+
+<ChildrenComponent bind:value={pin} {onsubmit} />
+```
+
+## setContext & getContext
+
+En Svelte, le contexte sert à partager des variables entre des composants parents et des composants enfants, sans passer par les props ni par event dispatch.
+
+Dans le composant parent
+
+````sveltehtml
+<script>
+import { setContext } from 'svelte';
+
+let context = $state({...})
+setContext('my-context', context)
+</script>
+````
+
+Dans le composant enfant
+
+````sveltehtml
+<script>
+import { getContext } from 'svelte';
+
+const context = getContext('my-context')
+</script>
+````
+
+## Elements spéciaux
+
 > TODO
 
