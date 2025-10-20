@@ -302,3 +302,16 @@ Pour geler les propriétés :
 Object.freeze(MyClass)
 ```
 
+
+
+## Node
+
+### Modules
+
+Pour vérifier que l'on est sur le point d'entrée : 
+
+```javascript
+if (require.main === module) {
+  void main()
+}
+```
