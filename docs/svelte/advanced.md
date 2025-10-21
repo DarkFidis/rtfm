@@ -369,5 +369,161 @@ const context = getContext('my-context')
 
 ## Elements spéciaux
 
-> TODO
+### svelte:window
 
+Avec la balise `<svelte:window>`, on peut ajouter un ou plusieurs event listeners appliqués à tous les éléments du DOM
+
+```sveltehtml
+<svelte:window {onevent}>
+```
+
+#### Binding de properties
+
+Pour binder un event window à un state (exemple avec l'event `scroll`) : 
+
+```sveltehtml
+<script>
+	let y = $state(0);
+</script>
+
+<svelte:window bind:scrollY={y} />
+
+<span>depth: {y}px</span>
+```
+
+On peut binder les propriétés suivantes : 
+
+- `innerWidth`
+- `innerHeight`
+- `outerWidth`
+- `outerHeight`
+- `scrollX`
+- `scrollY`
+- `online`
+
+### svelte:document
+
+La balise `<svelte:document>` permet d'écouter un ou plusieurs évènements dans `document`, c'est pratique si on veut
+réagir à des events qui ne sont pas accessibles dans `window`
+
+```sveltehtml
+<svelte:document {onevent}>
+```
+
+Exemple avec un changement de sélection : 
+
+```sveltehtml
+<script>
+	let selection = $state('');
+
+	const onselectionchange = (e) => {
+		selection = document.getSelection().toString();
+	};
+</script>
+
+<svelte:document {onselectionchange} />
+
+<h1>Select this text to fire events</h1>
+<p>Selection: {selection}</p>
+```
+
+> Les events `mouseenter` et `mouseleave` ne sont pas utilisables avec `<svelte:document>`
+
+
+### svelte:body
+
+La balise `<svelte:body>` permet d'écouter un ou plusieurs évènements dans `document.body`, c'est celui à utiliser si on veut exploiter
+des events comme `mouseenter` et `mouseleave`
+
+```sveltehtml
+<svelte:body {onevent}>
+```
+
+Exemple avec un changement de sélection :
+
+```sveltehtml
+<script>
+	import imageUrl from './some_img.png';
+
+	let visible = $state(false);
+</script>
+
+<svelte:body
+	onmouseenter={() => visible = true}
+	onmouseleave={() => visible = false}
+/>
+
+<img
+	class={{ myClass: visible }}
+	alt="Image is visible if mouses is inside document.body"
+	src={imageUrl}
+/>
+```
+
+### `svelte:head`
+
+La balise `<svelte:head>` peut s'avérer utile si on souhaite ajuster dynamiquement le CSS global, comme par exemple pour
+un changement de thème : 
+
+```sveltehtml
+<script>
+	const themes = ['dark', 'light', 'space', 'halloween'];
+	let selected = $state(themes[0]);
+</script>
+
+<svelte:head>
+	<link rel="stylesheet" href="/tutorial/stylesheets/{selected}.css" />
+</svelte:head>
+
+<h1>Welcome to my site!</h1>
+
+<select bind:value={selected}>
+	<option disabled>choose a theme</option>
+
+	{#each themes as theme}
+		<option>{theme}</option>
+	{/each}
+</select>
+```
+
+### svelte:element
+
+La balise `<svelte:element>` permet par exemple de modifier dynamiquement la nature d'un élément en fonction d'un state : 
+
+```sveltehtml
+<script>
+	const options = ['h1', 'h2', 'h3', 'p', 'strong', 'marquee'];
+	let selected = $state(options[0]);
+</script>
+
+<select bind:value={selected}>
+	{#each options as option}
+		<option value={option}>{option}</option>
+	{/each}
+</select>
+
+<svelte:element this={selected}>
+	I'm a <code>&lt;{selected}&gt;</code> element
+</svelte:element>
+```
+
+### svelte:boundary
+
+Le composant `svelte:boundary` sert à catcher les erreurs que peuvent throw les composants instables, cela permet d'éviter
+un crash complet de l'application et d'afficher directement le message d'erreur dans un snippet si besoin. Exemple : 
+
+```sveltehtml
+<script>
+	import BrokenComponent from './BrokenComponent.svelte';
+</script>
+
+<svelte:boundary onerror={(e) => console.error(e)}>
+	<BrokenComponent />
+
+	{#snippet failed(error, reset)}
+		<p>Oops! {error.message}</p>
+		// Bouton pour reset la page
+		<button onclick={reset}>Reset</button>
+	{/snippet}
+</svelte:boundary>
+```
