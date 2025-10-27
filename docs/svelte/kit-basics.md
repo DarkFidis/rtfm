@@ -257,4 +257,49 @@ On peut également customiser le traitement de la réponse du serveur en passant
 
 ## API
 
+Pour définir une route dans une app, créer le fichier `src/routes/<NOM_MA_ROUTE>/+server.js`
+
+### Route GET
+
+```js
+import { json } from '@sveltejs/kit';
+
+export function GET({ params, query }) {
+    // Récupération du param dynamique
+    const { myParam } = params
+	const message = 'Hello world !'
+
+    // Pour retourner une réponse plus détaillée
+	return new Response(message, {
+		headers: {
+			'Content-Type': 'application/json'
+		}
+	});
+    
+    // Pour retourner une réponse plus concise
+	return json(message);
+}
+```
+
+### Route POST
+
+```js
+import { json } from '@sveltejs/kit';
+import * as database from '$lib/server/database.js';
+
+export async function POST({ request, cookies }) {
+    // Récupération du body
+	const { description } = await request.json();
+    // Récupération du cookie
+	const userid = cookies.get('userid');
+	const { id } = await database.createTodo({ userid, description });
+
+	return json({ id }, { status: 201 });
+}
+```
+
+## State de l'application
+
+SvelteKit met à disposition trois variables pour l'état de l'application : `page`, `navigating` et `updated`
+
 
