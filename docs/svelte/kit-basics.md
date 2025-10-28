@@ -300,6 +300,140 @@ export async function POST({ request, cookies }) {
 
 ## State de l'application
 
-SvelteKit met à disposition trois variables pour l'état de l'application : `page`, `navigating` et `updated`
+SvelteKit met à disposition trois variables pour l'état de l'application : `page`, `navigating` et `updated`, via le module `$app/state`
+
+### `page`
+
+La variable d'état `page` contient toutes les infos relatives à la page dans lequel on se trouve : 
+
+- `url`: URL de la page
+- `params` : Params dynamiques
+- `route` : objet avec ID représentant la route
+- `status` : Statut HTTP de la page
+- `error` : Erreurs actuelles de la page
+- `data` : Donnée disponible dans la page (inclut donc le retour des fonctions `load` côté serveur)
+- `form` : Donnée retournée par une `action` de formulaire côté serveur
+
+Exemple d'utilisation pour une navigation dans un layout : 
+
+```sveltehtml
+<script>
+	import { page } from '$app/state';
+	
+	let { children } = $props();
+</script>
+
+<nav>
+	<a href="/" aria-current={page.url.pathname === '/'}>
+		Accueil
+	</a>
+
+	<a href="/about" aria-current={page.url.pathname === '/about'}>
+		A propos
+	</a>
+</nav>
+
+{@render children()}
+```
+
+### `navigating`
+
+La variable d'état `page` contient toutes les infos de navigation. Quand on clique sur un lien vers une autre page, cette variable est remplie avec :
+
+- `from` et `to` qui contiennent tous les deux un objet avec `params`, `route` et `url`
+- `type` : le type de navigation. Trois valeurs possibles : `link`, `popstate` ou `goto`
+
+### `updated`
+
+La variable d'état `updated` est objet contenant un booléen `current` qui détermine si oui ou non l'application a été mise à jour depuis le dernier chargement de la page
+
+### Exemple complet
+
+```sveltehtml
+<script>
+	import { page, navigating, updated } from '$app/state';
+	let { children } = $props();
+</script>
+
+<nav>
+	<a href="/" aria-current={page.url.pathname === '/'}>
+		Accueil
+	</a>
+
+	<a href="/about" aria-current={page.url.pathname === '/about'}>
+		A propos
+	</a>
+
+	{#if navigating.to}
+		navigating to {navigating.to.url.pathname}
+	{/if}
+</nav>
+
+{@render children()}
+
+{#if updated.current}
+	<div class="toast">
+		<p>
+			A new version of the app is available
+
+			<button onclick={() => location.reload()}>
+				reload the page
+			</button>
+		</p>
+	</div>
+{/if}
+```
+
+## Gestion des erreurs
+
+Dans SvelteKit, il y a deux types d'erreurs, les expected et les unexpected. Dans le premier cas, on utilise l'utilitaire `error` du module `@sveltejs/kit`.
+Exemple : 
+
+```js
+import { error } from '@sveltejs/kit';
+
+export function load() {
+	error(418, 'Custom error');
+}
+```
+
+### Page d'erreur
+
+On peut créer une page d'erreur par défaut pour toute l'app SvelteKit. Quand un `load` retournera une erreur, l'app va render la page `+error.svelte`
+définie soit dans la route, ou par défaut celle au niveau du dossier `routes` : 
+
+```sveltehtml
+<script lang="ts">
+	import { page } from '$app/state';
+</script>
+
+<h1>{page.status} {page.error.message}</h1>
+```
+
+Si toutefois une erreur venait à être levée pendant le chargement de la page (par exemple), SvelteKit va se rabattre sur une page d'erreur statique, la page de fallback `src/error.html` :
+
+````sveltehtml
+<h1>Erreur inattendue</h1>
+<p>Code %sveltekit.status%</p>
+<p>%sveltekit.error.message%</p>
+````
+
+## Redirections
+
+Pour effectuer une redirection, on utilise l'utilitaire `redirect` du module `@sveltejs/kit`
+
+```js
+import { redirect } from '@sveltejs/kit';
+
+export function load() {
+	redirect(307, '/to_new_page');
+}
+```
+
+> Rappel des codes de redirection : 
+> - `303` après un submit de formulaire réussi
+> - `307` pour les redirections temporaires
+> - `308` pour les redirections permanentes
+
 
 
