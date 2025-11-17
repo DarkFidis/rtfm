@@ -329,3 +329,48 @@ Pour revalider la donnée calculée par un loader, on utilise la fonction `inval
 Si on souhaite revalider toutes les données, on appelera `invalidateAll()` également importée depuis `import { invalidate } from '$app/navigation';`
 
 ## Variables d'environnement
+
+SvelteKit distingue deux types de variables d'environnement : les variables statiques dont le contenu est connu au moment du build de l'application
+et à l'inverse les variables dynamiques qui se déterminent au run de l'application.
+
+> 
+
+### Variables statiques privées
+
+Pour utiliser des variables d'environnement statiques privées, définies par exemple dans des fichiers `.env` ou `.env.[mode]`,
+on procède comme suit :
+
+```js
+import { VARIABLE } from '$env/static/private'
+```
+
+> Une variable statique privée ne peut être importée que dans un module serveur, c-à-d dans un fichier `**.server.js`
+
+### Variables dynamiques privées
+
+Si toutefois on souhaite lire les variables d'environnement pendant le run de l'app, alors on les utilise comme suit :
+
+```js
+import { env } from '$env/dynamic/private'
+// ...
+const envVariable = env.VARIABLE
+```
+
+### Variables publiques statiques
+
+Les variables publiques sont celles que l'on peut exposer en toute sécurité sur le navigateur, elles ont le préfixe `PUBLIC_`. Pour 
+utiliser ces variables définies dans les mêmes fichiers (`.env.[mode]`) : 
+
+```js
+import { PUBLIC_VARIABLE } from '$env/static/public'
+```
+
+### Variables publiques dynamiques
+
+Pour les variables publiques dynamiques, le fonctionnement est le même que pour les variables privées : 
+
+```js
+import { env } from '$env/dynamic/public'
+// ...
+const envVariable = env.PUBLIC_VARIABLE
+```
